@@ -2,7 +2,7 @@ import firebase from "~/plugins/firebase"
 import { firestoreAction } from "vuexfire"
 
 const db=firebase.firestore()
-const todoRef=db.collection('todos')
+const todosRef=db.collection('todos')
 
 export const state=()=>({
     todos:[]
