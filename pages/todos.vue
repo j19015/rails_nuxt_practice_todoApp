@@ -4,8 +4,10 @@
             <li v-for="todo in todos" :key="todo.id">
                 <!--{{todo}}-->
                 <input type="checkbox" v-bind:checked="todo.done" @change="toggle(todo)">
-                <span v-bind:class="{done: todo.done}"> {{todo.name}}   {{todo.created}} </span>
-                <button v-on:click="remove(todo.id)">X</button>
+                <span v-if="todo.created">
+                    <span v-bind:class="{done: todo.done}"> {{todo.name}}   {{todo.created.toDate() | dateFilter}} </span>
+                    <button v-on:click="remove(todo.id)">X</button>
+                </span>
             </li>
         </ul>
         <div class="form">
@@ -18,6 +20,7 @@
 </template>
 
 <script>
+    import moment from 'moment' 
     export default{
         data: function(){
             return{
@@ -46,12 +49,17 @@
             todos(){
                 return this.$store.state.todos.todos
             }
+        },
+        filters:{
+            dateFilter: function(date){
+                return moment(date).format('YYYY/MM/DD HH:mm:ss')
+            }
         }
     }
 </script>
 
 <style>
-    li > span.done{
+    li > span>span.done{
         text-decoration: line-through;
     }
 </style>
